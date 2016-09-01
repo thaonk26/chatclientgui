@@ -20,12 +20,15 @@ namespace MessagingApplication
         //private const string hostName = "10.2.20.22";
         delegate void SetTextCallback(string text);
         //TcpClient client;
-        NetworkStream networkStream;
+        NetworkStream networkStream = default(NetworkStream);
         //Thread thread = null;
         ////private const string hostName = "localhost";
         //string readData = null;
+        string messageData = null;
+        string userData = null;
         TcpClient tcpClient = new TcpClient();
-        IPAddress ipAddress = IPAddress.Parse("10.2.20.16");
+        IPAddress ipAddress = IPAddress.Loopback;//.Parse("192.168.0.2");
+        //IPAddress ipAddress = IPAddress.Parse("10.2.20.51");
         int PortNumber = 12000;
         public MessagingForm()
         {
@@ -37,7 +40,10 @@ namespace MessagingApplication
         }
         private void MessagingForm_Load(object sender, EventArgs e)
         {
-            Console.WriteLine("Connecting...");
+        }
+        private void ButtonConnect_Click(object sender, EventArgs e)
+        {
+            TextChat.Text += Environment.NewLine + "Connecting...";
             try
             {              
                 tcpClient.Connect(ipAddress, PortNumber);
@@ -46,11 +52,8 @@ namespace MessagingApplication
                 networkStream = tcpClient.GetStream();
             }
             catch { }
-        }
-        private void ButtonConnect_Click(object sender, EventArgs e)
-        {
             try {
-                string str = UserTextBox.Text + "$";
+                string str = "@#" + UserNameText.Text;
                 Stream stream = tcpClient.GetStream();
                 ASCIIEncoding ascii = new ASCIIEncoding();
                 byte[] bite = ascii.GetBytes(str);
@@ -73,7 +76,50 @@ namespace MessagingApplication
             //networkStream.Write(byteTime, 0, byteTime.Length);
             //networkStream.Flush();
         }
+        private void UpdateGUI()
+        {
+            if (InvokeRequired)
+               Invoke(new MethodInvoker(UpdateGUI));
+            else if (InvokeRequired != true && userData == null)
+                TextChat.Text = TextChat.Text + Environment.NewLine + messageData;
+            else
+            {
+                TextChat.Text = TextChat.Text + Environment.NewLine + ">> " + messageData;
+                
+            }
+        }
+        private void ConnectLoop()
+        {
+            int attempts = 0;
 
+            while (!tcpClient.Connected)
+            {
+                try
+                {
+                    attempts++;
+                    //tcpClient.Connect("10.2.20.51", 9999);
+                    tcpClient.Connect(ipAddress, PortNumber);
+                }
+                catch (SocketException)
+                {
+                    TextChat.Clear();
+                    TextChat.AppendText("Connection attempts: " + attempts.ToString());
+                }
+            }
+            TextChat.Clear();
+            messageData = "Conected to Chat Server ...";
+            //UpdateGUI();
+            networkStream = tcpClient.GetStream();
+            ButtonConnect.Visible = false;
+            SendButton.Visible = true;
+            UserTextBox.Visible = true;
+
+            byte[] outStreamMessage = Encoding.ASCII.GetBytes(UserNameText.Text + "m$m");
+            networkStream.Write(outStreamMessage, 0, outStreamMessage.Length);
+            networkStream.Flush();
+            Thread ctThread = new Thread(GetMessage);
+            ctThread.Start();
+        }
         private void SendButton_Click(object sender, EventArgs e)
         {
             string s = UserNameText.Text + ": " + UserTextBox.Text;
@@ -85,16 +131,17 @@ namespace MessagingApplication
         }
         public void GetMessage()
         {
-            networkStream = tcpClient.GetStream();
             byte[] bytes = new byte[1024];
-            while (true)
+            while (tcpClient.Connected)
             {
                 try
                 {
+                networkStream = tcpClient.GetStream();
                 int bytesRead = networkStream.Read(bytes, 0, bytes.Length);
                 this.SetText(Encoding.ASCII.GetString(bytes, 0, bytesRead));
                 }
                 catch { Application.Exit(); }
+                //UpdateGUI();
             }
         }
         private void SetText(string text)
@@ -117,6 +164,12 @@ namespace MessagingApplication
         private void UserNameText_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void TextChat_TextChanged(object sender, EventArgs e)
+        {
+            TextChat.SelectionStart = TextChat.Text.Length;
+            TextChat.ScrollToCaret();
         }
     }
 }

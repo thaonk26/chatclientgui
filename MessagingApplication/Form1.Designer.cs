@@ -30,13 +30,13 @@
         {
             this.SendButton = new System.Windows.Forms.Button();
             this.UserTextBox = new System.Windows.Forms.TextBox();
-            this.TextChat = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ButtonConnect = new System.Windows.Forms.Button();
             this.UserNameText = new System.Windows.Forms.TextBox();
             this.LabeluserName = new System.Windows.Forms.Label();
+            this.TextChat = new System.Windows.Forms.RichTextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,14 +57,6 @@
             this.UserTextBox.Size = new System.Drawing.Size(386, 20);
             this.UserTextBox.TabIndex = 1;
             this.UserTextBox.TextChanged += new System.EventHandler(this.UserTextBox_TextChanged);
-            // 
-            // TextChat
-            // 
-            this.TextChat.Location = new System.Drawing.Point(20, 51);
-            this.TextChat.Multiline = true;
-            this.TextChat.Name = "TextChat";
-            this.TextChat.Size = new System.Drawing.Size(386, 209);
-            this.TextChat.TabIndex = 2;
             // 
             // menuStrip1
             // 
@@ -118,21 +110,34 @@
             this.LabeluserName.TabIndex = 6;
             this.LabeluserName.Text = "UserName";
             // 
+            // TextChat
+            // 
+            this.TextChat.Location = new System.Drawing.Point(22, 51);
+            this.TextChat.Name = "TextChat";
+            this.TextChat.ReadOnly = true;
+            this.TextChat.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.TextChat.Size = new System.Drawing.Size(383, 236);
+            this.TextChat.TabIndex = 7;
+            this.TextChat.Text = "";
+            this.TextChat.TextChanged += new System.EventHandler(this.TextChat_TextChanged);
+            // 
             // MessagingForm
             // 
+            this.AcceptButton = this.SendButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(432, 378);
+            this.Controls.Add(this.TextChat);
             this.Controls.Add(this.LabeluserName);
             this.Controls.Add(this.UserNameText);
             this.Controls.Add(this.ButtonConnect);
-            this.Controls.Add(this.TextChat);
             this.Controls.Add(this.UserTextBox);
             this.Controls.Add(this.SendButton);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MessagingForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Nate\'s Messenger";
             this.Load += new System.EventHandler(this.MessagingForm_Load);
             this.menuStrip1.ResumeLayout(false);
@@ -146,13 +151,13 @@
 
         private System.Windows.Forms.Button SendButton;
         private System.Windows.Forms.TextBox UserTextBox;
-        private System.Windows.Forms.TextBox TextChat;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button ButtonConnect;
         private System.Windows.Forms.TextBox UserNameText;
         private System.Windows.Forms.Label LabeluserName;
+        private System.Windows.Forms.RichTextBox TextChat;
     }
 }
 

@@ -6,3 +6,4 @@ C:\Users\Nathaniel\Desktop\DCC Lectures\C# projects\Week 2\MessagingApplication\
 C:\Users\Nathaniel\Desktop\DCC Lectures\C# projects\Week 2\MessagingApplication\MessagingApplication\obj\Debug\MessagingClientApplication.csprojResolveAssemblyReference.cache
 C:\Users\Nathaniel\Desktop\DCC Lectures\C# projects\Week 2\MessagingApplication\MessagingApplication\obj\Debug\MessagingApplication.Properties.Resources.resources
 C:\Users\Nathaniel\Desktop\DCC Lectures\C# projects\Week 2\MessagingApplication\MessagingApplication\obj\Debug\MessagingClientApplication.csproj.GenerateResource.Cache
+C:\Users\Nathaniel\Desktop\DCC Lectures\C# projects\Week 2\MessagingApplication\MessagingApplication\obj\Debug\MessagingApplication.MessagingForm.resources
