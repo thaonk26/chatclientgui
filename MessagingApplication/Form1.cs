@@ -26,9 +26,10 @@ namespace MessagingApplication
         //string readData = null;
         string messageData = null;
         string userData = null;
+        Socket socket;
         TcpClient tcpClient = new TcpClient();
-        IPAddress ipAddress = IPAddress.Loopback;//.Parse("192.168.0.2");
-        //IPAddress ipAddress = IPAddress.Parse("10.2.20.51");
+        //IPAddress ipAddress = IPAddress.Loopback;//.Parse("192.168.0.2");
+        IPAddress ipAddress = IPAddress.Parse("192.168.0.2");
         int PortNumber = 12000;
         public MessagingForm()
         {
@@ -40,6 +41,24 @@ namespace MessagingApplication
         }
         private void MessagingForm_Load(object sender, EventArgs e)
         {
+        }
+        private void Connect()
+        {
+            socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            try
+            {
+                socket.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 12000));
+            }
+            catch
+            {
+                MessageBox.Show("Unable to Connect");
+            }
+        }
+        private void sendData()
+        {
+            byte[] data = Encoding.Default.GetBytes(TextChat.Text);
+            socket.Send(BitConverter.GetBytes(data.Length), 0, 4, 0);
+            socket.Send(data);
         }
         private void ButtonConnect_Click(object sender, EventArgs e)
         {
@@ -67,14 +86,6 @@ namespace MessagingApplication
                 thread.Start();
             }
             catch { }
-            //client = new TcpClient();
-            //readData = "Client Connected to Server.";            
-            //TextMessage();
-            //client.Connect(hostName, portNumber);
-            //networkStream = client.GetStream();
-            //byte[] byteTime = Encoding.ASCII.GetBytes(readData);
-            //networkStream.Write(byteTime, 0, byteTime.Length);
-            //networkStream.Flush();
         }
         private void UpdateGUI()
         {
