@@ -37,6 +37,8 @@
             this.UserNameText = new System.Windows.Forms.TextBox();
             this.LabeluserName = new System.Windows.Forms.Label();
             this.TextChat = new System.Windows.Forms.RichTextBox();
+            this.checkedUserBox = new System.Windows.Forms.CheckedListBox();
+            this.currentUserLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -116,10 +118,27 @@
             this.TextChat.Name = "TextChat";
             this.TextChat.ReadOnly = true;
             this.TextChat.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.TextChat.Size = new System.Drawing.Size(383, 236);
+            this.TextChat.Size = new System.Drawing.Size(274, 236);
             this.TextChat.TabIndex = 7;
             this.TextChat.Text = "";
             this.TextChat.TextChanged += new System.EventHandler(this.TextChat_TextChanged);
+            // 
+            // checkedUserBox
+            // 
+            this.checkedUserBox.FormattingEnabled = true;
+            this.checkedUserBox.Location = new System.Drawing.Point(300, 73);
+            this.checkedUserBox.Name = "checkedUserBox";
+            this.checkedUserBox.Size = new System.Drawing.Size(120, 214);
+            this.checkedUserBox.TabIndex = 8;
+            // 
+            // currentUserLabel
+            // 
+            this.currentUserLabel.AutoSize = true;
+            this.currentUserLabel.Location = new System.Drawing.Point(297, 57);
+            this.currentUserLabel.Name = "currentUserLabel";
+            this.currentUserLabel.Size = new System.Drawing.Size(71, 13);
+            this.currentUserLabel.TabIndex = 9;
+            this.currentUserLabel.Text = "Current Users";
             // 
             // MessagingForm
             // 
@@ -127,6 +146,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(432, 378);
+            this.Controls.Add(this.currentUserLabel);
+            this.Controls.Add(this.checkedUserBox);
             this.Controls.Add(this.TextChat);
             this.Controls.Add(this.LabeluserName);
             this.Controls.Add(this.UserNameText);
@@ -158,6 +179,8 @@
         private System.Windows.Forms.TextBox UserNameText;
         private System.Windows.Forms.Label LabeluserName;
         private System.Windows.Forms.RichTextBox TextChat;
+        private System.Windows.Forms.CheckedListBox checkedUserBox;
+        private System.Windows.Forms.Label currentUserLabel;
     }
 }
 
