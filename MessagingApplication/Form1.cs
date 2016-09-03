@@ -11,6 +11,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Net;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace MessagingApplication
 {
@@ -66,6 +67,7 @@ namespace MessagingApplication
                 current.Close(); // Dont shutdown because the socket may be disposed and its disconnected anyway                
                 return;
             }
+            AddToClients();
             byte[] recBuf = new byte[received];
             Array.Copy(_buffer, recBuf, received);
             string text = Encoding.ASCII.GetString(recBuf);
@@ -76,6 +78,19 @@ namespace MessagingApplication
         {
             ConnectToServer();
             ConnectionMessage();
+            AddToClients();
+            socket.BeginReceive(_buffer, 0, bufferSize, SocketFlags.None, ReceiveData, socket);
+        }
+        private void AddToClients()
+        {
+            string Response = Encoding.ASCII.GetString(_buffer);
+            if (Response.Contains("@#"))
+            {
+                //if (!Response.Contains(UserNameText.Text))
+                //{
+                    checkedUserBox.Items.Insert(0, Response.Substring(2, Response.Length - 2));
+                //}
+            }
         }
         private void SendButton_Click(object sender, EventArgs e)
         {
@@ -102,7 +117,9 @@ namespace MessagingApplication
                 string Response = Encoding.ASCII.GetString(_buffer);
                 TextChat.Text += Environment.NewLine + "Response from server: " + Response;
                 socket.Receive(_buffer, 0, _buffer.Length, 0);
-                socket.BeginReceive(_buffer, 0, bufferSize, SocketFlags.None, ReceiveData, socket);
+                //checkedUserBox.Items.Insert(0, Response.Substring(2, Response.Length - 2));
+
+                // socket.BeginReceive(_buffer, 0, bufferSize, SocketFlags.None, ReceiveData, socket);
             }
             catch { }
         }
